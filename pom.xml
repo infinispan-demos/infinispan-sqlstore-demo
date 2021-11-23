@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
     <name>Infinispan :: SQL Store Demo :: R00T</name>
     <modules>
-        <module>retail-catalog</module>
-        <module>inmemory-catalog</module>
+        <module>retail-catalogue</module>
+        <module>inmemory-catalogue</module>
     </modules>
 </project>

@@ -1,0 +1,26 @@
+{
+  "distributed-cache": {
+    "statistics": true,
+    "encoding": {
+      "media-type": "application/x-protostream"
+    },
+    "persistence": {
+      "table-jdbc-store": {
+        "dialect": "POSTGRES",
+        "shared": "true",
+        "table-name": "RetailProduct",
+        "schema": {
+          "message-name": "RetailProductValue",
+          "key-message-name": "RetailProductKey",
+          "package": "retail"
+        },
+        "connection-pool": {
+          "connection-url": "jdbc:postgresql://localhost:54354/default",
+          "driver": "org.postgresql.Driver",
+          "username": "quarkus",
+          "password": "quarkus"
+        }
+      }
+    }
+  }
+}
