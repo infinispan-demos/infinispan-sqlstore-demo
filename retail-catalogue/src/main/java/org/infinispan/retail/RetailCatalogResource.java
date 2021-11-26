@@ -8,6 +8,7 @@ import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -32,12 +33,16 @@ import java.util.List;
 public class RetailCatalogResource {
     private static final Logger LOGGER = Logger.getLogger(RetailCatalogResource.class);
 
+    @Inject
+    CommandLoader commandLoader;
+
     void onStart(@Observes StartupEvent ev) {
         LOGGER.info("Retail Store is starting Powered by Quarkus");
         LOGGER.info("  _   _   _   _   _   _");
         LOGGER.info(" / \\ / \\ / \\ / \\ / \\ / \\");
         LOGGER.info("( R | e | t | a | i | l )");
         LOGGER.info(" \\_/ \\_/ \\_/ \\_/ \\_/ \\_/");
+        commandLoader.initCommands();
     }
 
     @GET

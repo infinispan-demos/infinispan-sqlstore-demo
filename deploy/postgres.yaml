@@ -23,12 +23,12 @@ spec:
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: kineteco-credentials
+                  name: sqlstore-credentials
                   key: username
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: kineteco-credentials
+                  name: sqlstore-credentials
                   key: password
 ---
 apiVersion: v1
