@@ -16,8 +16,10 @@
             $scope.products = [];
 
             $scope.form = {
-                sku: "",
-                name: ""
+                code: "",
+                name: "",
+                price: "",
+                stock: ""
             };
 
             //Now load the data from server
@@ -25,8 +27,12 @@
 
             //HTTP POST methods for add products
             $scope.add = function () {
-                var data = { "code": $scope.form.code,
-                    "name": $scope.form.name};
+                var data = {
+                    "code": $scope.form.code,
+                    "name": $scope.form.name,
+                    "price": $scope.form.price,
+                    "stock": $scope.form.stock
+                };
 
                 $http({
                     method: "POST",
@@ -62,8 +68,10 @@
 
             //Clear the form
             function _clearForm() {
-                $scope.form.sku = "";
+                $scope.form.code = "";
                 $scope.form.name = "";
+                $scope.form.price = "";
+                $scope.form.stock = "";
             }
         });
     </script>
@@ -81,17 +89,27 @@
         <div class="row">
             <div class="col-6"><input type="text" placeholder="Name" ng-model="form.name" size="60"/></div>
         </div>
+        <div class="row">
+            <div class="col-6"><input type="text" placeholder="Price" ng-model="form.price" size="60"/></div>
+        </div>
+        <div class="row">
+            <div class="col-6"><input type="text" placeholder="Stock" ng-model="form.stock" size="60"/></div>
+        </div>
         <input type="submit" value="Save"/>
     </form>
 
     <h3>Retail Store List</h3>
     <div class="row">
-        <div class="col-4">Code</div>
-        <div class="col-8">Name</div>
+        <div class="col-3">Code</div>
+        <div class="col-3">Name</div>
+        <div class="col-3">Price</div>
+        <div class="col-3">Stock</div>
     </div>
     <div class="row" ng-repeat="product in products">
-        <div class="col-4">{{ product.code }}</div>
-        <div class="col-8">{{ product.name }}</div>
+        <div class="col-3">{{ product.code }}</div>
+        <div class="col-3">{{ product.name }}</div>
+        <div class="col-3">{{ product.price }}</div>
+        <div class="col-3">{{ product.stock }}</div>
     </div>
 </div>
 

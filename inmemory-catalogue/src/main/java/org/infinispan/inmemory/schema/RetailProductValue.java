@@ -1,19 +1,20 @@
 package org.infinispan.inmemory.schema;
 
+import org.infinispan.protostream.annotations.ProtoDoc;
 import org.infinispan.protostream.annotations.ProtoFactory;
 import org.infinispan.protostream.annotations.ProtoField;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
+@ProtoDoc("@Indexed")
 public class RetailProductValue {
    private String code;
    private String name;
-   private BigDecimal price;
+   private Double price;
    private Integer stock;
 
    @ProtoFactory
-   public RetailProductValue(String code, String name, BigDecimal price, Integer stock) {
+   public RetailProductValue(String code, String name, Double price, Integer stock) {
       this.code = code;
       this.name = name;
       this.price = price;
@@ -30,6 +31,7 @@ public class RetailProductValue {
    }
 
    @ProtoField(2)
+   @ProtoDoc("@Field(index=Index.YES, analyze = Analyze.YES, store = Store.YES)")
    public String getName() {
       return name;
    }
@@ -39,15 +41,17 @@ public class RetailProductValue {
    }
 
    @ProtoField(3)
-   public BigDecimal getPrice() {
+   @ProtoDoc("@Field(index=Index.YES, analyze = Analyze.NO, store = Store.YES)")
+   public Double getPrice() {
       return price;
    }
 
-   public void setPrice(BigDecimal price) {
+   public void setPrice(Double price) {
       this.price = price;
    }
 
    @ProtoField(4)
+   @ProtoDoc("@Field(index=Index.YES, analyze = Analyze.NO, store = Store.YES)")
    public Integer getStock() {
       return stock;
    }
