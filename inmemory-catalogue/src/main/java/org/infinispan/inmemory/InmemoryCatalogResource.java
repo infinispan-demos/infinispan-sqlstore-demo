@@ -31,7 +31,8 @@ public class InmemoryCatalogResource {
     final RemoteCache<Long, RetailProductValue> catalogue;
     final RemoteCache<PurchasedProductKey, PurchasedProductValue> soldProducts;
 
-    @Inject public InmemoryCatalogResource(InmemoryCatalogueConfig inmemoryCatalogueConfig, RemoteCacheManager cacheManager) {
+    @Inject
+    public InmemoryCatalogResource(InmemoryCatalogueConfig inmemoryCatalogueConfig, RemoteCacheManager cacheManager) {
         this.catalogue = cacheManager.getCache(inmemoryCatalogueConfig.catalogCacheName());
         this.soldProducts = cacheManager.getCache(inmemoryCatalogueConfig.soldProductsName());
     }
