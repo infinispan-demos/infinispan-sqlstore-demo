@@ -68,3 +68,92 @@ Additional resources and useful links:
 * [Infinispan Query and Indexing Guide](https://infinispan.org/docs/stable/titles/query/query.htm)
 * [Infinispan SQL Cache Storage Documentation](https://infinispan.org/docs/stable/titles/configuring/configuring.html#sql-cache-store_persistence)
 * [Quarkus Infinispan Extension](https://quarkus.io/guides/infinispan-client)
+
+## Deploy Minikube
+
+1. Install and start Minikube
+```shell
+ minikube start --driver=virtualbox --cpus 4 --memory "8192mb"
+```   
+2. Create Kubernetes Secret `sqlstore-credentials`
+```shell
+kubectl create secret generic sqlstore-credentials --from-literal=db-username=infinispan --from-literal=db-password=secret
+```
+
+3. Deploy Postgresql
+```shell
+kubectl apply -f postgres.yaml
+```
+
+4. Build and deploy Retail Catalogue
+```shell
+eval $(minikube -p minikube docker-env)
+./mvnw clean package -Dquarkus.kubernetes.deploy=true -DskipTests=true 
+
+# Export the service URL 
+export RETAIL_CATALOGUE=$(minikube service --url retail-store-service) 
+
+# Check the commands endpoint 
+curl $RETAIL_CATALOGUE/commands
+```
+
+5. Install the Infinispan Operator
+```shell
+curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.19.1/install.sh | bash -s v0.19.1
+kubectl create -f https://operatorhub.io/install/infinispan.yaml
+kubectl get csv -n operators
+```
+
+You should see
+```shell
+NAME                         DISPLAY               VERSION   REPLACES                     PHASE
+infinispan-operator.v2.2.1   Infinispan Operator   2.2.1     infinispan-operator.v2.2.0   Succeeded
+```
+
+6. Create Infinispan identities secret
+```shell
+kubectl create secret generic --from-file=identities.yaml connect-secret
+```
+
+7. Deploy infinispan server
+```shell
+kubectl apply -f infinispan.yaml
+```
+
+You should see something like the following list
+
+```shell
+ minikube service list    
+                                                                                    15:17:03
+|-------------|-----------------------|--------------|-----------------------------|
+|  NAMESPACE  |         NAME          | TARGET PORT  |             URL             |
+|-------------|-----------------------|--------------|-----------------------------|
+| default     | infinispan            | No node port |
+| default     | infinispan-admin      | No node port |
+| default     | infinispan-external   |        11222 | http://192.168.59.101:30000 |
+| default     | infinispan-ping       | No node port |
+| default     | kubernetes            | No node port |
+| default     | postgres              | http/5432    | http://192.168.59.101:31684 |
+| default     | retail-store-service  | http/80      | http://192.168.59.101:31056 |
+| kube-system | kube-dns              | No node port |
+| olm         | operatorhubio-catalog | No node port |
+| olm         | packageserver-service | No node port |
+|-------------|-----------------------|--------------|-----------------------------|
+
+```
+
+8. Create Infinispan Client Secret with the chosen user/password
+```shell
+kubectl create secret generic infinispan-client-credentials --from-literal=infinispan-username=admin --from-literal=infinispan-password=secret
+```
+
+9. Build and deploy Inmemory Catalogue
+```shell
+eval $(minikube -p minikube docker-env)
+./mvnw clean package -Dquarkus.kubernetes.deploy=true -DskipTests=true 
+
+# Export the service URL 
+export INMEMORY_CATALOGUE=$(minikube service --url inmemory-catalogue-service) 
+
+curl $INMEMORY_CATALOGUE
+```

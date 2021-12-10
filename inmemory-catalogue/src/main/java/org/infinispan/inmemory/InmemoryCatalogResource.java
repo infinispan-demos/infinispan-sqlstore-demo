@@ -28,11 +28,14 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Path("/")
 public class InmemoryCatalogResource {
+
     final RemoteCache<Long, RetailProductValue> catalogue;
     final RemoteCache<PurchasedProductKey, PurchasedProductValue> soldProducts;
+    final RemoteCacheManager cacheManager;
 
     @Inject
     public InmemoryCatalogResource(InmemoryCatalogueConfig inmemoryCatalogueConfig, RemoteCacheManager cacheManager) {
+        this.cacheManager = cacheManager;
         this.catalogue = cacheManager.getCache(inmemoryCatalogueConfig.catalogCacheName());
         this.soldProducts = cacheManager.getCache(inmemoryCatalogueConfig.soldProductsName());
     }
@@ -40,6 +43,14 @@ public class InmemoryCatalogResource {
     @GET
     public String health() {
         return String.format("Service is up! catalogue[%d] sold_products[%d]", catalogue.size(), soldProducts.size());
+    }
+
+    @GET()
+    @Path("reindex")
+    public String reindex() {
+        cacheManager.administration().reindexCache(catalogue.getName());
+        cacheManager.administration().reindexCache(soldProducts.getName());
+        return String.format("Reindex launched");
     }
 
     @GET

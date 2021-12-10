@@ -19,17 +19,17 @@ spec:
               protocol: TCP
           env:
             - name: POSTGRES_DB
-              value: kineteco
+              value: retailstore
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
                   name: sqlstore-credentials
-                  key: username
+                  key: db-username
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: sqlstore-credentials
-                  key: password
+                  key: db-password
 ---
 apiVersion: v1
 kind: Service
