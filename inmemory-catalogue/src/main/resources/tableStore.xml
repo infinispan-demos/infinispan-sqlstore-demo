@@ -6,14 +6,14 @@
         </indexed-entities>
     </indexing>
     <persistence>
-        <table-jdbc-store dialect="POSTGRES"
+        <table-jdbc-store dialect="DIALECT"
                           shared="false"
                           read-only="true"
                           table-name="retailproduct">
             <connection-pool connection-url="CONNECTION_URL"
                              username="USER_NAME"
                              password="PASSWORD"
-                             driver="org.postgresql.Driver"/>
+                             driver="DRIVER"/>
             <schema message-name="RetailProductValue"
                     package="retail"/>
         </table-jdbc-store>

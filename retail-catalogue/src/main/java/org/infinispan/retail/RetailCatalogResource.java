@@ -3,6 +3,7 @@ package org.infinispan.retail;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.panache.common.Sort;
 import io.quarkus.runtime.StartupEvent;
+import org.infinispan.retail.model.CustomerCommand;
 import org.infinispan.retail.model.RetailProduct;
 import org.jboss.logging.Logger;
 
@@ -42,7 +43,10 @@ public class RetailCatalogResource {
         LOGGER.info(" / \\ / \\ / \\ / \\ / \\ / \\");
         LOGGER.info("( R | e | t | a | i | l )");
         LOGGER.info(" \\_/ \\_/ \\_/ \\_/ \\_/ \\_/");
-        commandLoader.initCommands();
+        commandLoader.clearCommands();
+        for (int i = 0 ; i < 20; i++) {
+            commandLoader.createCommand();
+        }
     }
 
     @GET

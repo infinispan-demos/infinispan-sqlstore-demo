@@ -61,6 +61,30 @@ The application exposes 3 endpoints:
 * `catalogue/{code}`: Displays the catalogue product by code
 * `sales`: Lists the  products than have been sold. Filter can be done name of the product and country.
 
+## Dev mode 
+
+* Run Infinispan and Postgresql in the same network with docker
+
+```shell
+docker-compose up
+```
+Dev services are disabled since the Infinispan and Postresql need to be in the same
+docker network and Infinispan access the Postgresql database directly to load the data
+into the caches.
+
+* Run Retail Catalogue and Store
+
+```shell
+cd infinispan-sqlstore-demo/retail-catalogue 
+./mvnw quarkus:dev 
+```
+
+* Run Infinispan In-memory catalogue
+```shell
+cd infinispan-sqlstore-demo/inmemory-catalogue 
+./mvnw quarkus:dev 
+```
+
 ## Links
 
 Additional resources and useful links:
@@ -77,7 +101,11 @@ Additional resources and useful links:
 ```   
 2. Create Kubernetes Secret `sqlstore-credentials`
 ```shell
-kubectl create secret generic sqlstore-credentials --from-literal=db-username=infinispan --from-literal=db-password=secret
+kubectl create secret generic clients-credentials 
+--from-literal=db-username=infinispan 
+--from-literal=db-password=secret
+--from-literal=infinispan-username=admin 
+--from-literal=infinispan-password=secret
 ```
 
 3. Deploy Postgresql
@@ -142,12 +170,7 @@ You should see something like the following list
 
 ```
 
-8. Create Infinispan Client Secret with the chosen user/password
-```shell
-kubectl create secret generic infinispan-client-credentials --from-literal=infinispan-username=admin --from-literal=infinispan-password=secret
-```
-
-9. Build and deploy Inmemory Catalogue
+8. Build and deploy Inmemory Catalogue
 ```shell
 eval $(minikube -p minikube docker-env)
 ./mvnw clean package -Dquarkus.kubernetes.deploy=true -DskipTests=true 

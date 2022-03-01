@@ -49,7 +49,10 @@ public class ConfigureSQLStore {
       String config = IOUtils.toString(cacheConfig, StandardCharsets.UTF_8)
                   .replace("CONNECTION_URL", inmemoryCatalogueConfig.connectionUrl())
                   .replace("USER_NAME", inmemoryCatalogueConfig.userName())
-                  .replace("PASSWORD", inmemoryCatalogueConfig.password());
+                  .replace("PASSWORD", inmemoryCatalogueConfig.password())
+                  .replace("DIALECT", inmemoryCatalogueConfig.dialect())
+                  .replace("DRIVER", inmemoryCatalogueConfig.driver());
+
       return config;
    }
 

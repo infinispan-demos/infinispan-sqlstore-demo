@@ -8,24 +8,29 @@ import org.jboss.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Random;
 
 @ApplicationScoped
 public class CommandLoader {
 
-    private static final Logger LOGGER = Logger.getLogger(CommandLoader.class);
+    private Random random = new Random();
 
     @Transactional
-    public void initCommands() {
-        LOGGER.info("Creating commands");
+    public void clearCommands() {
+        CustomerCommand.deleteAll();
+    }
+
+    @Transactional
+    public void createCommand() {
         List<RetailProduct> products = RetailProduct.listAll();
         List<Customer> customers = Customer.listAll();
-
         CustomerCommand customerCommand = new CustomerCommand();
         customerCommand.promotion = true;
-        customerCommand.buyer = customers.get(0);
-        customerCommand.products = products;
-
-        customerCommand.persist();
+        customerCommand.buyer = customers.get(random.nextInt(customers.size()));
+        int randomPos2 = random.nextInt(products.size());
+        int randomPos1 = random.nextInt(randomPos2 + 1);
+        customerCommand.products = products.subList(randomPos1, randomPos2);
+        customerCommand.persistAndFlush();
     }
 
 }

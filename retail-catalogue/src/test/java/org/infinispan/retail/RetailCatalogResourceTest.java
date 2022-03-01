@@ -40,9 +40,9 @@ public class RetailCatalogResourceTest {
               .get("/products")
               .then()
               .statusCode(Response.Status.OK.getStatusCode())
-              .body("$.size()", is(1))
+              .body("$.size()", is(18))
               .extract().as(RetailProduct[].class);
-        assertThat(inventory).hasSize(1);
+        assertThat(inventory).hasSize(18);
     }
 
     @Test

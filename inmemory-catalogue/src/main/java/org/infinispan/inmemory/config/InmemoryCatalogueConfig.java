@@ -14,6 +14,10 @@ public interface InmemoryCatalogueConfig {
 
    String password();
 
+   String dialect();
+
+   String driver();
+
    @WithDefault("catalogue-table-store")
    String catalogCacheName();
 

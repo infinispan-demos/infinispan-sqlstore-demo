@@ -1,0 +1,30 @@
+version: '3'
+
+networks:
+  mynetwork:
+    driver: bridge
+
+services:
+  infinispan-server:
+    image: infinispan/server:latest
+    environment:
+      - USER=admin
+      - PASS=secret
+      - SERVER_LIBS=org.postgresql:postgresql:42.3.1
+    ports:
+      - "11222:11222"
+    container_name: infinispan
+    networks:
+      - mynetwork
+    depends_on:
+      - database
+  database:
+    image: postgres:13.3
+    environment:
+      POSTGRES_USER: "infinispan"
+      POSTGRES_PASSWORD: "secret"
+      POSTGRES_DB: "retailstore"
+    ports:
+      - "5432:5432"
+    networks:
+      - mynetwork

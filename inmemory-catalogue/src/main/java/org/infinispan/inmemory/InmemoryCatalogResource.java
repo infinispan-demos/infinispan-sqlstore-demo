@@ -41,11 +41,12 @@ public class InmemoryCatalogResource {
     }
 
     @GET
+    @Path("health")
     public String health() {
         return String.format("Service is up! catalogue[%d] sold_products[%d]", catalogue.size(), soldProducts.size());
     }
 
-    @GET()
+    @GET
     @Path("reindex")
     public String reindex() {
         cacheManager.administration().reindexCache(catalogue.getName());
