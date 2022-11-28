@@ -31,10 +31,7 @@
                     JOIN customercommand_retailproduct ON customercommand.id = customercommand_retailproduct.customercommand_id
                     JOIN retailproduct ON retailproduct.id = customercommand_retailproduct.products_id"
 
-                    size="SELECT COUNT(*) FROM customercommand
-                    JOIN customer customercommand.buyer_id = customer.id
-                    JOIN customercommand_retailproduct ON customercommand.id = customercommand_retailproduct.customercommand_id
-                    JOIN retailproduct ON retailproduct.id = customercommand_retailproduct.products_id"/>
+                    size="SELECT COUNT(*) FROM customercommand" />
         </query-jdbc-store>
     </persistence>
 </distributed-cache>
