@@ -1,0 +1,37 @@
+<distributed-cache statistics="true">
+    <encoding media-type="application/x-protostream"/>
+    <indexing>
+        <indexed-entities>
+            <indexed-entity>retail.PurchasedProductValue</indexed-entity>
+        </indexed-entities>
+    </indexing>
+    <persistence>
+        <query-jdbc-store dialect="DIALECT"
+                          shared="false"
+                          read-only="true"
+                          key-columns="id,products_id">
+            <connection-pool connection-url="CONNECTION_URL"
+                             username="USER_NAME"
+                             password="PASSWORD"
+                             driver="DRIVER"/>
+            <schema key-message-name="PurchasedProductKey"
+                    message-name="PurchasedProductValue"
+                    package="retail"/>
+            <queries
+                    select-single="SELECT customercommand.id, customercommand_retailproduct.products_id,
+                    retailproduct.name, customer.country FROM customercommand
+                    JOIN customer ON customercommand.buyer_id = customer.id
+                    JOIN customercommand_retailproduct ON customercommand.id = customercommand_retailproduct.customercommand_id
+                    JOIN retailproduct ON retailproduct.id = customercommand_retailproduct.products_id
+                    WHERE customercommand.id=:id and retailproduct.id=:products_id"
+
+                    select-all="SELECT customercommand.id, customercommand_retailproduct.products_id,
+                    retailproduct.name, customer.country FROM customercommand
+                    JOIN customer ON customercommand.buyer_id = customer.id
+                    JOIN customercommand_retailproduct ON customercommand.id = customercommand_retailproduct.customercommand_id
+                    JOIN retailproduct ON retailproduct.id = customercommand_retailproduct.products_id"
+
+                    size="SELECT COUNT(*) FROM customercommand" />
+        </query-jdbc-store>
+    </persistence>
+</distributed-cache>

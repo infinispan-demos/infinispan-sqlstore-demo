@@ -3,8 +3,10 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.infinispan</groupId>
-  <artifactId>inmemory-catalogue</artifactId>
+  <artifactId>quarkus-inmemory-catalogue</artifactId>
   <version>1.0.0-SNAPSHOT</version>
+  <name>In-memory Catalogue with Quarkus</name>
+  <description>Uses Quarkus and Infinispan Server to work with an In-Memory catalogue of products.</description>
   <properties>
     <compiler-plugin.version>3.14.0</compiler-plugin.version>
     <maven.compiler.release>21</maven.compiler.release>

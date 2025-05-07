@@ -13,6 +13,7 @@
     </properties>
     <modules>
         <module>retail-catalogue</module>
-        <module>inmemory-catalogue</module>
+        <module>inmemory-catalogue-quarkus</module>
+        <module>inmemory-catalogue-quarkus</module>
     </modules>
 </project>
