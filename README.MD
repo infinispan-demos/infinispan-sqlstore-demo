@@ -1,6 +1,6 @@
 [![Infinispan](https://design.jboss.org/infinispan/logo/final/PNG/infinispan_logo_rgb_lightbluewhite_darkblue_600px.png)](https://infinispan.org/)
 
-# Infinispan SQL Store Demo with Quarkus # 
+# Infinispan SQL Store Demo with Spring-Boot and Quarkus # 
 
 ## Description
 
@@ -49,6 +49,12 @@ Retail Catalogue is a very simple Quarkus application that persists data in a Po
 ```
 
 ### Inmemory Catalogue
+
+There are two implementations of the service:
+* Spring Boot 3 version
+* Quarkus version
+
+#### Overall Description
 
 Inmemory Catalogue creates two SQL Cache Stores with Infinispan on startup. 
 1. `catalogue-table-store` is a table sql store persisted cache that maps to the RetailProduct table

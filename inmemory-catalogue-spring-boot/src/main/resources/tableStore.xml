@@ -1,0 +1,21 @@
+<distributed-cache statistics="true">
+    <encoding media-type="application/x-protostream"/>
+    <indexing>
+        <indexed-entities>
+            <indexed-entity>retail.RetailProductValue</indexed-entity>
+        </indexed-entities>
+    </indexing>
+    <persistence>
+        <table-jdbc-store dialect="DIALECT"
+                          shared="false"
+                          read-only="true"
+                          table-name="retailproduct">
+            <connection-pool connection-url="CONNECTION_URL"
+                             username="USER_NAME"
+                             password="PASSWORD"
+                             driver="DRIVER"/>
+            <schema message-name="RetailProductValue"
+                    package="retail"/>
+        </table-jdbc-store>
+    </persistence>
+</distributed-cache>
