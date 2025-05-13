@@ -9,7 +9,7 @@ spec:
     nodePort: 30000
   dependencies:
     artifacts:
-      - url: https://search.maven.org/remotecontent?filepath=org/postgresql/postgresql/42.3.1/postgresql-42.3.1.jar
+      - maven: org.postgresql:postgresql:42.7.3
   security:
     endpointSecretName: connect-secret
   service:
