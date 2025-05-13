@@ -2,9 +2,9 @@ package org.infinispan.retail.model;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.runtime.annotations.RegisterForReflection;
+import jakarta.persistence.Entity;
+import jakarta.ws.rs.NotFoundException;
 
-import javax.persistence.Entity;
-import javax.ws.rs.NotFoundException;
 import java.math.BigDecimal;
 import java.util.Objects;
 

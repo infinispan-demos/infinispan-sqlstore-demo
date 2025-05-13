@@ -2,10 +2,9 @@ package org.infinispan.retail;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
+import jakarta.ws.rs.core.Response;
 import org.infinispan.retail.model.RetailProduct;
 import org.junit.jupiter.api.Test;
-
-import javax.ws.rs.core.Response;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;

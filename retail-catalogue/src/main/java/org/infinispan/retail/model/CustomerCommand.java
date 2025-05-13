@@ -2,13 +2,11 @@ package org.infinispan.retail.model;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.runtime.annotations.RegisterForReflection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import java.util.List;
 
 @RegisterForReflection
@@ -16,7 +14,7 @@ import java.util.List;
 public class CustomerCommand extends PanacheEntity {
    public Boolean promotion;
 
-   @OneToOne(fetch = FetchType.LAZY)
+   @ManyToOne(fetch = FetchType.LAZY)
    public Customer buyer;
 
    @ManyToMany(fetch = FetchType.LAZY)

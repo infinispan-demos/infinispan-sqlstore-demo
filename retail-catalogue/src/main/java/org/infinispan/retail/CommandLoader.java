@@ -1,19 +1,17 @@
 package org.infinispan.retail;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
 import org.infinispan.retail.model.Customer;
 import org.infinispan.retail.model.CustomerCommand;
 import org.infinispan.retail.model.RetailProduct;
-import org.jboss.logging.Logger;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @ApplicationScoped
 public class CommandLoader {
 
-    private Random random = new Random();
+    private ThreadLocalRandom random = ThreadLocalRandom.current();
 
     @Transactional
     public void clearCommands() {
@@ -22,8 +20,8 @@ public class CommandLoader {
 
     @Transactional
     public void createCommand() {
-        List<RetailProduct> products = RetailProduct.listAll();
         List<Customer> customers = Customer.listAll();
+        List<RetailProduct> products = RetailProduct.listAll();
         CustomerCommand customerCommand = new CustomerCommand();
         customerCommand.promotion = true;
         customerCommand.buyer = customers.get(random.nextInt(customers.size()));

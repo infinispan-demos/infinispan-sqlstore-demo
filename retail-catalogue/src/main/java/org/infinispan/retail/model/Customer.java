@@ -2,8 +2,7 @@ package org.infinispan.retail.model;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.runtime.annotations.RegisterForReflection;
-
-import javax.persistence.Entity;
+import jakarta.persistence.Entity;
 
 @RegisterForReflection
 @Entity
