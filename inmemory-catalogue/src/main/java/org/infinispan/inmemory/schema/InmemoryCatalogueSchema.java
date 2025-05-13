@@ -1,9 +1,9 @@
 package org.infinispan.inmemory.schema;
 
 import org.infinispan.protostream.GeneratedSchema;
-import org.infinispan.protostream.annotations.AutoProtoSchemaBuilder;
+import org.infinispan.protostream.annotations.ProtoSchema;
 
-@AutoProtoSchemaBuilder(includeClasses= { RetailProductValue.class, PurchasedProductKey.class, PurchasedProductValue.class},
+@ProtoSchema(includeClasses= { RetailProductValue.class, PurchasedProductKey.class, PurchasedProductValue.class},
       schemaPackageName = "retail")
 public interface InmemoryCatalogueSchema extends GeneratedSchema {
 }

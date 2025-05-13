@@ -1,15 +1,15 @@
 package org.infinispan.inmemory;
 
 import io.quarkus.runtime.StartupEvent;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Observes;
+import jakarta.inject.Inject;
 import org.apache.commons.io.IOUtils;
 import org.infinispan.client.hotrod.RemoteCacheManager;
-import org.infinispan.commons.configuration.XMLStringConfiguration;
+import org.infinispan.commons.configuration.StringConfiguration;
 import org.infinispan.inmemory.config.InmemoryCatalogueConfig;
 import org.jboss.logging.Logger;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.event.Observes;
-import javax.inject.Inject;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -37,9 +37,9 @@ public class ConfigureSQLStore {
          String configTable = replaceDBConnectionConfiguration(tableStoreCacheConfig);
          String configQuery = replaceDBConnectionConfiguration(queryStoreCacheConfig);
          remoteCacheManager.administration()
-               .getOrCreateCache(inmemoryCatalogueConfig.catalogCacheName(), new XMLStringConfiguration(configTable));
+               .getOrCreateCache(inmemoryCatalogueConfig.catalogCacheName(), new StringConfiguration(configTable));
          remoteCacheManager.administration()
-               .getOrCreateCache(inmemoryCatalogueConfig.soldProductsName(), new XMLStringConfiguration(configQuery));
+               .getOrCreateCache(inmemoryCatalogueConfig.soldProductsName(), new StringConfiguration(configQuery));
       } catch (Exception e) {
          LOGGER.error("Something went wrong creating caches");
       }

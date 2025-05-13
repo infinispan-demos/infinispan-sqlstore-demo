@@ -6,11 +6,11 @@ networks:
 
 services:
   infinispan-server-lon:
-    image: infinispan/server:latest
+    image: infinispan/server:15.2
     environment:
       - USER=admin
       - PASS=secret
-      - SERVER_LIBS=org.postgresql:postgresql:42.3.1
+      - SERVER_LIBS=org.postgresql:postgresql:42.7.3
     ports:
       - "11222:11222"
     container_name: infinispan-lon
@@ -20,7 +20,7 @@ services:
       - database
     command: -c infinispan-xsite.xml -Dinfinispan.site.name=LON -Djgroups.mcast_port=46656
   infinispan-server-nyc:
-      image: infinispan/server:latest
+      image: infinispan/server:15.2
       environment:
         - USER=admin
         - PASS=secret
@@ -31,7 +31,7 @@ services:
         - mynetwork
       command: -c infinispan-xsite.xml -Dinfinispan.site.name=NYC -Djgroups.mcast_port=46657
   database:
-    image: postgres:13.3
+    image: postgres:17
     environment:
       POSTGRES_USER: "infinispan"
       POSTGRES_PASSWORD: "secret"

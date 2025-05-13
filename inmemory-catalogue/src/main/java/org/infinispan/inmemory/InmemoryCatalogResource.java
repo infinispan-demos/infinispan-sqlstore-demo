@@ -1,26 +1,24 @@
 package org.infinispan.inmemory;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 import org.infinispan.client.hotrod.RemoteCache;
 import org.infinispan.client.hotrod.RemoteCacheManager;
 import org.infinispan.client.hotrod.Search;
+import org.infinispan.commons.api.query.Query;
 import org.infinispan.inmemory.config.InmemoryCatalogueConfig;
 import org.infinispan.inmemory.schema.PurchasedProductKey;
 import org.infinispan.inmemory.schema.PurchasedProductValue;
 import org.infinispan.inmemory.schema.RetailProductValue;
-import org.infinispan.query.dsl.Query;
-import org.infinispan.query.dsl.QueryFactory;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 import java.util.List;
 
 @ApplicationScoped
@@ -57,9 +55,7 @@ public class InmemoryCatalogResource {
     @GET
     @Path("catalogue/{code}")
     public Response getByCode(@PathParam("code") String code) {
-        String queryByCode = "from retail.RetailProductValue where code= :code";
-        QueryFactory queryFactory = Search.getQueryFactory(catalogue);
-        Query<RetailProductValue> query = queryFactory.create(queryByCode);
+        Query<RetailProductValue> query = catalogue.query("from retail.RetailProductValue where code= :code");
         query.setParameter("code", code);
         query.maxResults(1);
         List<RetailProductValue> list = query.execute().list();
@@ -92,8 +88,7 @@ public class InmemoryCatalogResource {
             fullTextQuery = fullTextQuery + String.format(" and price : [%d to %d]", priceMin, priceMax);
         }
 
-        QueryFactory queryFactory = Search.getQueryFactory(catalogue);
-        Query<RetailProductValue> query = queryFactory.create(fullTextQuery);
+        Query<RetailProductValue> query = catalogue.query(fullTextQuery);
         query.maxResults(Integer.MAX_VALUE); // all. TODO: use pagination
         return Response.ok(query.execute().list()).build();
     }
@@ -112,8 +107,7 @@ public class InmemoryCatalogResource {
         if (country != null) {
             fullTextQuery = fullTextQuery + "and country='" +  country +"'";
         }
-        QueryFactory queryFactory = Search.getQueryFactory(soldProducts);
-        Query<RetailProductValue> query = queryFactory.create(fullTextQuery);
+        Query<RetailProductValue> query = soldProducts.query(fullTextQuery);
         query.maxResults(Integer.MAX_VALUE); // TODO: All. Use pagination
         return Response.ok(query.execute().list()).build();
     }

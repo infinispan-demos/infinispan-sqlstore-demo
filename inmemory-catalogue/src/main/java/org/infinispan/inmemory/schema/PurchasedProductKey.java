@@ -1,33 +1,20 @@
 package org.infinispan.inmemory.schema;
 
-import org.infinispan.protostream.annotations.ProtoFactory;
+import org.infinispan.protostream.annotations.Proto;
 import org.infinispan.protostream.annotations.ProtoField;
 
+@Proto
 public class PurchasedProductKey {
-   private Long commandId;
-   private Long productId;
-
-   @ProtoFactory
-   public PurchasedProductKey(Long commandId, Long productId) {
-      this.commandId = commandId;
-      this.productId = productId;
-   }
-
    @ProtoField(number = 1, name = "id")
-   public Long getCommandId() {
-      return commandId;
-   }
-
-   public void setCommandId(Long commandId) {
-      this.commandId = commandId;
-   }
-
+   Long id;
    @ProtoField(number = 2, name = "products_id")
+   Long productId;
+
+   public Long getId() {
+      return id;
+   }
+
    public Long getProductId() {
       return productId;
-   }
-
-   public void setProductId(Long productId) {
-      this.productId = productId;
    }
 }
