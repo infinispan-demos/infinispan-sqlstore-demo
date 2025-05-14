@@ -107,7 +107,7 @@ Additional resources and useful links:
 ```   
 2. Create Kubernetes Secret `sqlstore-credentials`
 ```shell
-kubectl create secret generic clients-credentials 
+kubectl create secret generic sqlstore-credentials 
 --from-literal=db-username=infinispan 
 --from-literal=db-password=secret
 --from-literal=infinispan-username=admin 
