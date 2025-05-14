@@ -1,0 +1,12 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: read-secrets-binding
+  namespace: david-test
+subjects:
+  - kind: ServiceAccount
+    name: user1   # or your app's service account
+roleRef:
+  kind: Role
+  name: read-secrets
+  apiGroup: rbac.authorization.k8s.io
