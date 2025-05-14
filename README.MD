@@ -127,15 +127,10 @@ Additional resources and useful links:
 ```shell
  minikube start --driver=virtualbox --cpus 4 --memory "8192mb"
 ```
-Feel free to use the driver that suist your Desktop, like "podman".
 
 2. Create Kubernetes Secret `sqlstore-credentials`
 ```shell
-kubectl create secret generic sqlstore-credentials 
---from-literal=db-username=infinispan 
---from-literal=db-password=secret
---from-literal=infinispan-username=admin 
---from-literal=infinispan-password=secret
+kubectl create secret generic sqlstore-credentials --from-literal=db-username=infinispan --from-literal=db-password=secret --from-literal=infinispan-username=admin --from-literal=infinispan-password=secret
 ```
 
 3. Deploy Postgresql
@@ -146,7 +141,8 @@ kubectl apply -f deploy/postgres.yaml
 4. Build and deploy Retail Catalogue
 ```shell
 eval $(minikube -p minikube docker-env)
- ./retail-catalogue/mvnw clean package -Dquarkus.kubernetes.deploy=true -DskipTests=true 
+cd retail-catalogue
+ .mvnw clean package -Dquarkus.kubernetes.deploy=true -DskipTests=true 
 
 # Export the service URL 
 export RETAIL_CATALOGUE=$(minikube service --url retail-store-service) 
@@ -162,10 +158,10 @@ kubectl create -f https://operatorhub.io/install/infinispan.yaml
 kubectl get csv -n operators
 ```
 
-You should see
+You should see something like
 ```shell
-NAME                         DISPLAY               VERSION   REPLACES                     PHASE
-infinispan-operator.v2.2.1   Infinispan Operator   2.2.1     infinispan-operator.v2.2.0   Succeeded
+NAME                          DISPLAY               VERSION   REPLACES                      PHASE
+infinispan-operator.v2.4.12   Infinispan Operator   2.4.12    infinispan-operator.v2.4.11   Succeeded
 ```
 
 6. Create Infinispan identities secret
@@ -200,9 +196,10 @@ You should see something like the following list
 
 ```
 
-8. Build and deploy Inmemory Catalogue
+8. Build and deploy Inmemory Catalogue Quarkus
 ```shell
 eval $(minikube -p minikube docker-env)
+cd inmemory-catalogue-quarkus
 ./mvnw clean package -Dquarkus.kubernetes.deploy=true -DskipTests=true 
 
 # Export the service URL 
