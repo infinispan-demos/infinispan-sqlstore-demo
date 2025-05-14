@@ -14,6 +14,6 @@
     <modules>
         <module>retail-catalogue</module>
         <module>inmemory-catalogue-quarkus</module>
-        <module>inmemory-catalogue-quarkus</module>
+        <module>inmemory-catalogue-spring-boot</module>
     </modules>
 </project>

@@ -7,6 +7,7 @@
 ### Retail Catalogue
 
 Retail Catalogue is a very simple Quarkus application that persists data in a Postgresql database. 
+In dev mode, runs under localhost:8080
 
 'commands' endpoint displays the content of the database model.
 ```json
@@ -51,8 +52,8 @@ Retail Catalogue is a very simple Quarkus application that persists data in a Po
 ### Inmemory Catalogue
 
 There are two implementations of the service:
-* Spring Boot 3 version
-* Quarkus version
+* Quarkus version : *inmemory-catalogue-quarkus*
+* Spring Boot 3 version: *inmemory-catalogue-spring-boot*
 
 #### Overall Description
 
@@ -74,9 +75,13 @@ The application exposes 3 endpoints:
 ```shell
 docker-compose up
 ```
+
+### Quarkus
 Dev services are disabled since the Infinispan and Postresql need to be in the same
 docker network and Infinispan access the Postgresql database directly to load the data
 into the caches.
+
+The application runs in localhost:8180
 
 * Run Retail Catalogue and Store
 
@@ -87,8 +92,25 @@ cd infinispan-sqlstore-demo/retail-catalogue
 
 * Run Infinispan In-memory catalogue
 ```shell
-cd infinispan-sqlstore-demo/inmemory-catalogue 
+cd infinispan-sqlstore-demo/inmemory-catalogue-quarkus 
 ./mvnw quarkus:dev 
+```
+
+### Spring Boot
+
+The application runs in localhost:8180.
+
+* Run Retail Catalogue and Store
+
+```shell
+cd infinispan-sqlstore-demo/retail-catalogue 
+./mvnw quarkus:dev 
+```
+
+* Run Infinispan In-memory catalogue 
+```shell
+cd infinispan-sqlstore-demo/inmemory-catalogue-spring-boot
+./mvnw spring-boot:run 
 ```
 
 ## Links
@@ -104,7 +126,9 @@ Additional resources and useful links:
 1. Install and start Minikube
 ```shell
  minikube start --driver=virtualbox --cpus 4 --memory "8192mb"
-```   
+```
+Feel free to use the driver that suist your Desktop, like "podman".
+
 2. Create Kubernetes Secret `sqlstore-credentials`
 ```shell
 kubectl create secret generic sqlstore-credentials 
@@ -116,13 +140,13 @@ kubectl create secret generic sqlstore-credentials
 
 3. Deploy Postgresql
 ```shell
-kubectl apply -f postgres.yaml
+kubectl apply -f deploy/postgres.yaml
 ```
 
 4. Build and deploy Retail Catalogue
 ```shell
 eval $(minikube -p minikube docker-env)
-./mvnw clean package -Dquarkus.kubernetes.deploy=true -DskipTests=true 
+ ./retail-catalogue/mvnw clean package -Dquarkus.kubernetes.deploy=true -DskipTests=true 
 
 # Export the service URL 
 export RETAIL_CATALOGUE=$(minikube service --url retail-store-service) 
@@ -133,7 +157,7 @@ curl $RETAIL_CATALOGUE/commands
 
 5. Install the Infinispan Operator
 ```shell
-curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.19.1/install.sh | bash -s v0.19.1
+curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.31.0/install.sh | bash -s v0.31.0
 kubectl create -f https://operatorhub.io/install/infinispan.yaml
 kubectl get csv -n operators
 ```
