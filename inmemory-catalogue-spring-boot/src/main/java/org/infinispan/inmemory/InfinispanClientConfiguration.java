@@ -1,5 +1,6 @@
 package org.infinispan.inmemory;
 
+import org.infinispan.commons.marshall.ProtoStreamMarshaller;
 import org.infinispan.inmemory.schema.InmemoryCatalogueSchemaImpl;
 import org.infinispan.spring.starter.remote.InfinispanRemoteCacheCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +17,8 @@ public class InfinispanClientConfiguration {
       return b -> {
          // Add marshaller in the client, the class is generated from the interface in compile time
          b.addContextInitializer(new InmemoryCatalogueSchemaImpl());
+         // Java Serialization is default in Spring Boot. Use Protostream to use query
+         b.marshaller(ProtoStreamMarshaller.class);
       };
    }
 }
