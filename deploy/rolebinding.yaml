@@ -5,7 +5,7 @@ metadata:
   namespace: david-test
 subjects:
   - kind: ServiceAccount
-    name: user1   # or your app's service account
+    name: admin   # or your app's service account
 roleRef:
   kind: Role
   name: read-secrets
