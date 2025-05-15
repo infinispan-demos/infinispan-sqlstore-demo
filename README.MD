@@ -4,10 +4,18 @@
 
 ## Description
 
+This demo illustrates how to build a high-performance product catalogue 
+by integrating a traditional SQL-based backend with a distributed in-memory cache using Infinispan.
+
+![retailSQLStoreDemo.png](retailSQLStoreDemo.png)
+
+* *Back-office REST API*, traditional SQL database, manages product catalogues.
+* *Front-office REST API* use Infinispan SQL Cache Stores to load and serve product catalogue and sales data directly from memory.
+
 ### Retail Catalogue
 
 Retail Catalogue is a very simple Quarkus application that persists data in a Postgresql database. 
-In dev mode, runs under localhost:8080
+**In dev mode, runs under localhost:8080**
 
 'commands' endpoint displays the content of the database model.
 ```json
