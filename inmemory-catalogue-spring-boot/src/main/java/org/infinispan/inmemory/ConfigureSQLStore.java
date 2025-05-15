@@ -10,7 +10,7 @@ import org.infinispan.protostream.GeneratedSchema;
 import org.infinispan.query.remote.client.ProtobufMetadataManagerConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.context.event.ApplicationStartedEvent;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +32,7 @@ public class ConfigureSQLStore {
       this.inmemoryCatalogueConfig = inmemoryCatalogueConfig;
    }
 
-   @EventListener(ApplicationStartedEvent.class)
+   @EventListener(ApplicationReadyEvent.class)
    public void onStart() {
       LOGGER.info("Infinispan SQL Store is starting Powered by Spring Boot");
       LOGGER.info("  _   _   _   _   _   _   _   _");
