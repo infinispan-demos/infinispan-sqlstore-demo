@@ -9,6 +9,8 @@ spec:
   replicas: 1
   security:
     endpointSecretName: connect-secret
+    endpointEncryption:
+      type: None
   dependencies:
     artifacts:
     - maven: org.postgresql:postgresql:42.7.3
