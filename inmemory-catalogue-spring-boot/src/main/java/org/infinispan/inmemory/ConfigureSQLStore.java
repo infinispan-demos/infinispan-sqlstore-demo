@@ -20,7 +20,6 @@ import java.nio.charset.StandardCharsets;
 
 @Component
 public class ConfigureSQLStore {
-
    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigureSQLStore.class);
 
    private final RemoteCacheManager remoteCacheManager;
@@ -32,16 +31,14 @@ public class ConfigureSQLStore {
       this.inmemoryCatalogueConfig = inmemoryCatalogueConfig;
    }
 
-   @EventListener(ApplicationReadyEvent.class)
    public void onStart() {
-      LOGGER.info("Infinispan SQL Store is starting Powered by Spring Boot");
+      LOGGER.info("Infinispan SQL Store is getting configured Powered by Spring Boot");
       LOGGER.info("  _   _   _   _   _   _   _   _");
       LOGGER.info(" / \\ / \\ / \\ / \\ / \\ / \\ / \\ / \\");
       LOGGER.info("( S | q | l | S | t | o | r | e )");
       LOGGER.info(" \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/");
 
       try {
-
          LOGGER.info("Creating schemas...");
          RemoteCache<String, String> schemasCache = remoteCacheManager.getCache(ProtobufMetadataManagerConstants.PROTOBUF_METADATA_CACHE_NAME);
          GeneratedSchema schema = new InmemoryCatalogueSchemaImpl();
@@ -58,6 +55,8 @@ public class ConfigureSQLStore {
                  .getOrCreateCache(inmemoryCatalogueConfig.getCatalogCacheName(), new StringConfiguration(configTable));
          remoteCacheManager.administration()
                  .getOrCreateCache(inmemoryCatalogueConfig.getSoldProductsName(), new StringConfiguration(configQuery));
+
+         LOGGER.info("Caches created if necessary.");
 
       } catch (Exception e) {
          LOGGER.error("Something went wrong creating caches", e);

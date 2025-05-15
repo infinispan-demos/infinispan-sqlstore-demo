@@ -24,8 +24,11 @@ public class InmemoryCatalogController {
     private final RemoteCache<PurchasedProductKey, PurchasedProductValue> soldProducts;
     private final RemoteCacheManager cacheManager;
 
-    public InmemoryCatalogController(InmemoryCatalogueConfig config, RemoteCacheManager cacheManager) {
+    public InmemoryCatalogController(InmemoryCatalogueConfig config,
+                                     ConfigureSQLStore configureSQLStore,
+                                     RemoteCacheManager cacheManager) {
         this.cacheManager = cacheManager;
+        configureSQLStore.onStart();
         this.catalogue = cacheManager.getCache(config.getCatalogCacheName());
         this.soldProducts = cacheManager.getCache(config.getSoldProductsName());
     }
