@@ -83,20 +83,8 @@
 	<profiles>
 		<profile>
 			<id>openshift</id>
-			<properties>
-				<spring.profiles.active>prod</spring.profiles.active>
-			</properties>
 			<build>
 				<plugins>
-					<plugin>
-						<groupId>org.springframework.boot</groupId>
-						<artifactId>spring-boot-maven-plugin</artifactId>
-						<configuration>
-							<profiles>
-								<profile>prod</profile>
-							</profiles>
-						</configuration>
-					</plugin>
 					<plugin>
 						<groupId>io.fabric8</groupId>
 						<artifactId>fabric8-maven-plugin</artifactId>
