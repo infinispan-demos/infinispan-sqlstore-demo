@@ -56,7 +56,7 @@
 
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-kubernetes-fabric8</artifactId>
+			<artifactId>spring-cloud-starter-kubernetes-client-config</artifactId>
 			<version>${version.cloud.spring}</version>
 		</dependency>
 
