@@ -5,7 +5,7 @@ metadata:
   namespace: david-test
 spec:
   expose:
-    type: LoadBalancer
+    type: Route
   replicas: 1
   security:
     endpointSecretName: connect-secret

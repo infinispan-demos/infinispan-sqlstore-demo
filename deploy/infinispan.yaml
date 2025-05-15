@@ -12,7 +12,5 @@ spec:
       - maven: org.postgresql:postgresql:42.7.3
   security:
     endpointSecretName: connect-secret
-    endpointEncryption:
-      type: None
   service:
     type: DataGrid
