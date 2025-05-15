@@ -1,0 +1,14 @@
+apiVersion: infinispan.org/v1
+kind: Infinispan
+metadata:
+  name: infinispan
+  namespace: david-test
+spec:
+  expose:
+    type: LoadBalancer
+  replicas: 1
+  security:
+    endpointSecretName: connect-secret
+  dependencies:
+    artifacts:
+    - maven: org.postgresql:postgresql:42.7.3
