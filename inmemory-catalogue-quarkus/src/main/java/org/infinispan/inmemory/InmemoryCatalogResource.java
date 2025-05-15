@@ -1,5 +1,6 @@
 package org.infinispan.inmemory;
 
+import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -41,7 +42,22 @@ public class InmemoryCatalogResource {
     @GET
     @Path("health")
     public String health() {
-        return String.format("Service is up! catalogue[%d] sold_products[%d]", catalogue.size(), soldProducts.size());
+        int catalogueSize = 0;
+        int soldProductsSize = 0;
+
+        try {
+            catalogueSize = catalogue.size();
+        } catch (Exception ex) {
+            Log.error("Error getting catalogue size", ex);
+        }
+
+        try {
+            soldProductsSize = soldProducts.size();
+        } catch (Exception ex) {
+            Log.error("Error getting sold products size", ex);
+        }
+
+        return String.format("Service is up! catalogue[%d] sold_products[%d]", catalogueSize, soldProductsSize);
     }
 
     @GET
